@@ -1,6 +1,6 @@
 # External gems
 # See http://ixti.net/software/2013/01/28/using-jekyll-plugins-on-github-pages.html for making `jekyll archives` work.
-gems:
+plugins:
   - jekyll-archives # Sorry, not GitHub pages friendly!
   - jekyll-sitemap
   - jekyll-paginate
@@ -13,7 +13,7 @@ title: lostfind
 subtitle: "일하면서 공부하면서 조금씩 알아가는 것들의 정리"
 email: dwkim1124@gmail.com
 name: Daewook Kim
-description: 
+description:
 
 # Base URL of site (i.e. /blog). It should always start with a slash,
 # and never end with a slash. Set it to a blank value if hosting at the
