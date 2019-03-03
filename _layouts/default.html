@@ -15,4 +15,15 @@
 
   </body>
 
+  <script type"text/javascript">
+  $(function (){
+    $("code").each(function() {
+      var codeName = $(this).attr("class") ? $(this).attr("class").split(":")[1] : null;
+      if (codeName) {
+        $(this).parent().addClass("source-code");
+        $("<div class='code-name'>"+ codeName +"</div>").insertBefore($(this));
+      }
+    });
+  });
+  </script>
 </html>

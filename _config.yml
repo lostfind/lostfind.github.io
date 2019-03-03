@@ -32,10 +32,10 @@ highlightjs_theme: "monokai-sublime"
 
 nav:
   Posts: '/posts/'
-  Categories: '/category/'
-  Tags: '/tags/'
+  # Categories: '/category/'
+  # Tags: '/tags/'
   About: '/about/'
-  Typography: "/typography/"
+  # Typography: "/typography/"
 
 # Where are tags and categories displayed
 archives:
@@ -87,7 +87,35 @@ social:
     username: lostfind
     url: https://github.com/lostfind
     desc: Fork me on GitHub
+    share: true
+
+  - name: Twitter
+    icon: twitter
+    username: lost_find
+    url: https://twitter.com/lost_find
+    desc: Follow me on Twitter
+    share: true
+
+  - name: Facebook
+    icon: facebook
+    username: thebencentra
+    url:
+    desc: Friend me on Facebook
+    share: true
+
+  - name: Instagram
+    icon: instagram
+    username:
+    url:
+    desc: Follow me on Instagram
     share: false
+
+  # - name: Pinterest
+  #   icon: pinterest
+  #   username:
+  #   url:
+  #   desc: Follow me on Pinterest
+  #   share: true
 
 # Social sharing protocols
 # These are for automatically generating sharing metadata for FB and Twitter

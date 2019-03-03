@@ -1,0 +1,143 @@
+---
+layout: post
+title:  "PHP 세션관리"
+date:   2019-03-03 16:37
+author: lostfind
+categories: php
+tags:	session php
+cover:  "/assets/instacode.png"
+---
+
+웹 개발자로서 기본적으로 알고 있어야 할 지식이지만, 남에게 확신을 가지고 설명 할 수 없는 상태였기 때문에 공부 한 후 정리 해둔다.
+
+## PHP에서 세션
+
+프레임 워크를 없이 순수 PHP에서의 세션 관리를 위한 방법.
+
+### 세션의 시작, 재개
+
+```php
+# 각 페이지의 스크립트 최상단에서 호출 해야 한다.
+session_start();
+```
+
+### 세션의 종료
+
+`session_destroy();`만으로는 슈퍼전역변수 `$_SESSION`과 세션쿠키를 해제하지 않기 때문에 세션 파괴 전에 처리 해야 할 필요가 있다.
+
+```php
+# session_destroy를 호출하기 전에 세션을 재개
+session_start();
+
+# 세션 글로벌 변수를 초기화
+$_SESSION = array();
+
+# 세션ID를 보관 하고 있는 쿠키 삭제
+if (isset($_COOKIE[session_name()])) {
+  setcookie(session_name(), '', time() - 3600, '/');
+}
+
+# 현재 세션에 관련된 모든 데이터를 파괴.
+session_destroy();
+```
+***
+
+## 샘플코드
+```php:session_start.php
+<?php
+  session_start();
+
+  if (!isset($_SESSION['count'])) {
+    $_SESSION['count'] = 0;
+  }
+  if (!isset($_SESSION['createTime'])) {
+    $_SESSION['createTime'] = date("Y/m/d H:i:s");
+  }
+?>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>PLAYGROUND</title>
+  </head>
+  <body>
+    <div>
+      세션ID : <?= session_id() ?>
+    </div>
+    <div>
+      액세스 수 : <?= $_SESSION['count']++ ?>
+    </div>
+    <div>
+      세션생성일시 : <?= $_SESSION['createTime'] ?>
+    </div>
+    <hr>
+    <div>
+      <a href="session_check.php">세션유지확인</a>
+      <a href="session_destroy.php">세션파괴</a>
+    </div>
+  </body>
+</html>
+```
+
+```php:session_check.php
+<?php
+session_start();
+?>
+
+<div>
+  세션 ID : <?= session_id() ?>
+</div>
+<div>
+  세션생성일시 : <?= $_SESSION['createTime'] ?>
+</div>
+<hr>
+<div>
+  <a href="session_start.php">세션생성</a>
+  <a href="session_destroy.php">세션파괴</a>
+</div>
+```
+
+```php:session_destroy.php
+<?php
+session_start();
+
+echo "파괴 전의 세션 내용<br>";
+print_r($_SESSION);
+$_SESSION = array();
+
+if (isset($_COOKIE[session_name()])) {
+  setcookie(session_name(), '', time() - 3600, '/');
+}
+session_destroy();
+
+echo "<hr>세션 파괴 후<br>";
+print_r($_SESSION);
+?>
+<hr>
+<div>
+  <a href="session_start.php">세션생성</a>
+</div>
+
+```
+
+***
+
+## 세션이란
+
+동적 웹 프로그래밍에서 필수적인 요소이다.
+HTTP 프로토콜은 상태를 저장 할 수 없는 일회성인 요청과 응답만이 있는 프로토콜이기 때문에,
+웹 서버와 클라이언트 간의 상태를 유지시켜 지속적인 통신을 하기 위해 쿠키나 세션을 사용한다.
+
+그 중 세션은 사용자의 요청에 대한 정보를 세션 아이디를 부여한 후 웹 서버에 저장하고,
+세션 아이디를 사용자의 쿠키에 저장하여 HTTP 요청 시 쿠키에 저장된 ID로 사용자의 세션을 판단한다.
+
+동일한 도메인을 가진 경우 웹 브라우저에서는 세션이 공유 되지만, 타 브라우저 혹은 시크릿 모드와는 기본적으로 세션 공유가 되지 않는다.
+
+***
+
+## 참고
+PHP 매뉴얼
+- [슈퍼전역변수 $_SESSION](http://php.net/manual/en/reserved.variables.session.php)
+- [session_start()](http://php.net/manual/en/function.session-start.php)
+- [session_destroy()](http://php.net/manual/en/function.session-destroy.php)

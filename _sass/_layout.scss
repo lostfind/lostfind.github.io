@@ -38,6 +38,27 @@ pre code.hljs {
 	font-size: modular-scale(-1);
 }
 
+pre.source-code {
+  margin-top: -25px;
+
+  .code-name {
+    position: relative;
+    top: 18px;
+    left: 13px;
+    display: inline-block;
+    padding: 3px 6px;
+    background-color: #777;
+    color: #eee;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 3px;
+  }
+
+  code {
+    padding-top: 25px !important; // !importantは必要に応じて
+  }
+}
+
 .page-divider {
 	$divider-color: $light-gray;
   display: block;
